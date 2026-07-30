@@ -1,0 +1,35 @@
+type User @table {
+  email: String!
+  username: String!
+  avatarUrl: String
+  createdAt: Timestamp
+}
+
+type Goal @table {
+  title: String!
+  targetDate: Date!
+  description: String
+  colorCode: String
+  user: User!
+}
+
+type Habit @table {
+  title: String!
+  frequencyType: String!
+  description: String
+  reminderTime: Timestamp
+  goal: Goal!
+}
+
+type HabitLog @table {
+  completedAt: Timestamp!
+  notes: String
+  habit: Habit!
+}
+
+type Streak @table {
+  currentCount: Int!
+  lastUpdated: Timestamp!
+  longestCount: Int
+  habit: Habit!
+}

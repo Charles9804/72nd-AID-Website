@@ -1,0 +1,127 @@
+mutation CreateUser($email: String!, $username: String!) @auth(level: USER) {
+  user_insert(data: { id_expr: "auth.uid", email: $email, username: $username })
+}
+
+mutation UpdateUser($username: String) @auth(level: USER) {
+  user_update(key: { id_expr: "auth.uid" }, data: { username: $username })
+}
+
+mutation DeleteUser @auth(level: USER) {
+  user_delete(key: { id_expr: "auth.uid" })
+}
+
+query GetUser @auth(level: USER) {
+  user(key: { id_expr: "auth.uid" }) {
+    email
+    username
+  }
+}
+
+query ListUsers @auth(level: PUBLIC, insecureReason: "Publicly accessible list of users for discovery") {
+  users {
+    username
+    avatarUrl
+  }
+}
+
+mutation CreateGoal($title: String!, $targetDate: Date!) @auth(level: USER) {
+  goal_insert(data: { title: $title, targetDate: $targetDate, userId_expr: "auth.uid" })
+}
+
+mutation UpdateGoal($id: UUID!, $title: String) @auth(level: USER) {
+  goal_update(key: { id: $id }, data: { title: $title })
+}
+
+mutation DeleteGoal($id: UUID!) @auth(level: USER) {
+  goal_delete(key: { id: $id })
+}
+
+query GetGoal($id: UUID!) @auth(level: USER) {
+  goal(id: $id) {
+    title
+    targetDate
+  }
+}
+
+query ListMyGoals @auth(level: USER) {
+  goals(where: { userId: { eq_expr: "auth.uid" } }) {
+    title
+    targetDate
+  }
+}
+
+mutation CreateHabit($title: String!, $frequencyType: String!, $goalId: UUID!) @auth(level: USER) {
+  habit_insert(data: { title: $title, frequencyType: $frequencyType, goalId: $goalId })
+}
+
+mutation UpdateHabit($id: UUID!, $description: String) @auth(level: USER) {
+  habit_update(key: { id: $id }, data: { description: $description })
+}
+
+mutation DeleteHabit($id: UUID!) @auth(level: USER) {
+  habit_delete(key: { id: $id })
+}
+
+query GetHabit($id: UUID!) @auth(level: USER) {
+  habit(id: $id) {
+    title
+    frequencyType
+  }
+}
+
+query ListHabitsByGoal($goalId: UUID!) @auth(level: USER) {
+  habits(where: { goalId: { eq: $goalId } }) {
+    title
+  }
+}
+
+mutation CreateHabitLog($habitId: UUID!, $completedAt: Timestamp!) @auth(level: USER) {
+  habitLog_insert(data: { habitId: $habitId, completedAt: $completedAt })
+}
+
+mutation UpdateHabitLog($id: UUID!, $notes: String) @auth(level: USER) {
+  habitLog_update(key: { id: $id }, data: { notes: $notes })
+}
+
+mutation DeleteHabitLog($id: UUID!) @auth(level: USER) {
+  habitLog_delete(key: { id: $id })
+}
+
+query GetHabitLog($id: UUID!) @auth(level: USER) {
+  habitLog(id: $id) {
+    completedAt
+    notes
+  }
+}
+
+query ListHabitLogs($habitId: UUID!) @auth(level: USER) {
+  habitLogs(where: { habitId: { eq: $habitId } }) {
+    completedAt
+  }
+}
+
+mutation CreateStreak($habitId: UUID!, $currentCount: Int!) @auth(level: USER) {
+  streak_insert(data: { habitId: $habitId, currentCount: $currentCount, lastUpdated_expr: "request.time" })
+}
+
+mutation UpdateStreak($id: UUID!, $currentCount: Int!) @auth(level: USER) {
+  streak_update(key: { id: $id }, data: { currentCount: $currentCount, lastUpdated_expr: "request.time" })
+}
+
+mutation DeleteStreak($id: UUID!) @auth(level: USER) {
+  streak_delete(key: { id: $id })
+}
+
+query GetStreak($id: UUID!) @auth(level: USER) {
+  streak(id: $id) {
+    currentCount
+    longestCount
+  }
+}
+
+query ListStreaksByUser @auth(level: USER) {
+  streaks(where: { habit: { goal: { userId: { eq_expr: "auth.uid" } } } }) {
+    currentCount
+    habit { title }
+  }
+}

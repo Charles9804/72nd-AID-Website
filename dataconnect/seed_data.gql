@@ -1,0 +1,27 @@
+mutation SeedDatabase @transaction {
+  user_insertMany(data: [
+    { id: "00000000-0000-0000-0000-000000000001", email: "alice@example.com", username: "alice" },
+    { id: "00000000-0000-0000-0000-000000000002", email: "bob@example.com", username: "bob" },
+    { id: "00000000-0000-0000-0000-000000000003", email: "charlie@example.com", username: "charlie" }
+  ])
+  goal_insertMany(data: [
+    { id: "10000000-0000-0000-0000-000000000001", title: "Learn GraphQL", targetDate: "2025-12-31", userId: "00000000-0000-0000-0000-000000000001" },
+    { id: "10000000-0000-0000-0000-000000000002", title: "Exercise Daily", targetDate: "2025-06-01", userId: "00000000-0000-0000-0000-000000000002" },
+    { id: "10000000-0000-0000-0000-000000000003", title: "Read Books", targetDate: "2026-01-01", userId: "00000000-0000-0000-0000-000000000003" }
+  ])
+  habit_insertMany(data: [
+    { id: "20000000-0000-0000-0000-000000000001", title: "Watch Tutorial", frequencyType: "DAILY", goalId: "10000000-0000-0000-0000-000000000001" },
+    { id: "20000000-0000-0000-0000-000000000002", title: "Morning Run", frequencyType: "DAILY", goalId: "10000000-0000-0000-0000-000000000002" },
+    { id: "20000000-0000-0000-0000-000000000003", title: "Read 10 pages", frequencyType: "DAILY", goalId: "10000000-0000-0000-0000-000000000003" }
+  ])
+  habitLog_insertMany(data: [
+    { id: "30000000-0000-0000-0000-000000000001", completedAt: "2024-05-20T10:00:00Z", habitId: "20000000-0000-0000-0000-000000000001" },
+    { id: "30000000-0000-0000-0000-000000000002", completedAt: "2024-05-20T06:30:00Z", habitId: "20000000-0000-0000-0000-000000000002" },
+    { id: "30000000-0000-0000-0000-000000000003", completedAt: "2024-05-20T21:00:00Z", habitId: "20000000-0000-0000-0000-000000000003" }
+  ])
+  streak_insertMany(data: [
+    { id: "40000000-0000-0000-0000-000000000001", currentCount: 5, lastUpdated: "2024-05-20T00:00:00Z", habitId: "20000000-0000-0000-0000-000000000001" },
+    { id: "40000000-0000-0000-0000-000000000002", currentCount: 12, lastUpdated: "2024-05-20T00:00:00Z", habitId: "20000000-0000-0000-0000-000000000002" },
+    { id: "40000000-0000-0000-0000-000000000003", currentCount: 1, lastUpdated: "2024-05-20T00:00:00Z", habitId: "20000000-0000-0000-0000-000000000003" }
+  ])
+}
