@@ -1,0 +1,1002 @@
+.icon-img-large {
+  width: 160px;       /* 設定你想要的寬度 */
+  height: auto;       /* 自動計算高度，維持長寬比例 */
+  filter: drop-shadow(0 0 10px rgba(212, 175, 55, 0.3));
+}
+
+:root {
+  /* 背景色系 */
+  --bg-dark: #0a1118;        /* 全站最深背景色 (深藍黑) */
+  --bg-card: #0e1a24;        /* 卡片/區塊背景色 (稍微淺一點的深藍) */
+  
+  /* 文字與金屬色系 */
+  --text-gold: #d4af37;      /* 主要金色 (標題、重點字) */
+  --text-gold-light: #f3e5ab;/* 淺金色 (滑鼠懸停效果) */
+  --text-white: #ffffff;     /* 主內文白色 */
+  --text-muted: #8a99ad;     /* 次要內文灰藍色 */
+  
+  /* 邊框與按鈕 */
+  --border-gold: #c5a059;    /* 金色邊框線條 */
+  --btn-gold-bg: #d4af37;    /* 金色填滿按鈕背景 */
+}
+
+body {
+  margin: 0;
+  background-color: var(--bg-dark);
+  color: var(--text-white);
+  font-family: "PingFang TC", "Microsoft JhengHei", sans-serif;
+}
+
+/* 頂部導覽列 */
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  box-sizing: border-box;
+  z-index: 1000;
+  background-color: rgba(10, 17, 24, 0.3);
+  border-bottom: 1px solid rgba(197, 160, 89, 0.3);
+  border-bottom: 1px solid rgba(197, 160, 89, 0.3);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 50px;
+  transition: background-color 0.3s ease;
+}
+
+/* 當頁面往下滑動時，Header 變深藍色與增加底邊框 */
+header.scrolled {
+  background-color: #893523;
+  background-color: var(--bg-card); 
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+}
+
+/* 頂部內部區塊 */
+.header-container {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* 網站標題/Logo */
+.logo {
+  display: flex;
+  flex-direction: center;
+  gap: 12px;
+}
+
+.logo-img{
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+  filter: drop-shadow(0 0 4px rgba(212, 175, 55, 0.4));
+}
+
+.logo-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.logo-title {
+  color: var(--text-gold);
+  font-size: 18px;
+  font-weight: bold;
+  line-height: 1.2;
+}
+
+.logo-subtitle {
+  color: var(--text-muted);
+  font-size: 11px;
+}
+
+.logo-title {
+  color: var(--text-gold);
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.logo-subtitle {
+  color: var(--text-muted);
+  font-size: 11px;
+}
+
+/* 導覽連結 */
+nav {
+  display: flex;
+  align-items: center;
+}
+
+nav a {
+  color: var(--text-white);
+  text-decoration: none;
+  margin-left: 20px;
+  transition: color 0.3s;
+}
+
+nav a:hover, nav a.active {
+  color: var(--text-gold);
+}
+
+.btn-login {
+  border: 1px solid var(--border-gold);
+  padding: 6px 16px;
+  border-radius: 4px;
+}
+
+/* ================= Hero 輪播區塊 ================= */
+.hero {
+  position: relative;
+  overflow: hidden;
+  padding: 140px 20px;
+  text-align: center;
+  min-height: 450px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 輪播圖容器 */
+.hero-slideshow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+/* 每張圖的基本設定 */
+.slide {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  opacity: 0;
+  animation: blurSlideFade 40s infinite ease-in-out;
+}
+
+/* 設定替換的圖片路徑 (請替換為你的圖片檔名) */
+.slide-1 {
+  background-image: url('images/72nd-meeting.png');
+  background-position: center bottom;
+  animation-delay: 0s;
+}
+
+.slide-2 {
+  background-image: url('images/72nd-meeting2.png');
+  animation-delay: 10s;
+}
+
+.slide-3 {
+  background-image: url('images/combat2.png'); 
+  animation-delay: 20s;
+}
+
+.slide-4 {
+  background-image: url('images/tank-combat1.png'); 
+  animation-delay: 30s;
+}
+
+/* 深色半透明遮罩 (保護前景文字可讀性) */
+.hero-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(180deg, rgba(10, 17, 24, 0.4) 0%, rgba(10, 17, 24, 0.4) 100%);
+  z-index: 2;
+}
+
+/* 保障文字在最上層 */
+.hero-content {
+  position: relative;
+  z-index: 3;
+}
+
+/* ================= 模糊淡入淡出關鍵幀動畫 ================= */
+@keyframes blurSlideFade {
+  0% {
+    opacity: 0;
+    filter: blur(10px);
+  }
+  1.5% {
+    opacity: 1;
+    filter: blur(0px); /* 進入時由模糊變清晰 */
+  }
+  23.5% {
+    opacity: 1;
+    filter: blur(0px);
+  }
+  25% {
+    opacity: 0;
+    filter: blur(12px); /* 切換時由清晰變模糊 */
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.hero .subtitle-en {
+  color: var(--text-gold);
+  letter-spacing: 3px;
+  font-size: 14px;
+}
+
+.hero h1 {
+  color: var(--text-white);
+  font-size: 48px;
+  font-weight: bold;
+  margin: 15px 0;
+}
+
+.hero p.description {
+  color: var(--text-muted);
+  max-width: 600px;
+  margin: 0 auto 30px;
+  line-height: 1.6;
+}
+
+.hero-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+
+/* 按鈕樣式 */
+.btn-gold {
+  background-color: var(--btn-gold-bg);
+  color: #000000;
+  font-weight: bold;
+  padding: 12px 28px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.btn-gold:hover {
+  background-color: var(--text-gold-light);
+  box-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
+}
+
+.btn-outline-gold {
+  background-color: transparent;
+  color: var(--text-gold);
+  border: 1px solid var(--border-gold);
+  padding: 12px 28px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.btn-outline-gold:hover {
+  background-color: rgba(212, 175, 55, 0.1);
+  color: var(--text-gold-light);
+}
+
+/* 卡片與網格 */
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+.card {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-gold);
+  padding: 30px;
+  border-radius: 4px;
+  margin: 20px 0;
+}
+
+.card h2 {
+  color: var(--text-gold);
+  font-size: 24px;
+  border-bottom: 1px solid rgba(197, 160, 89, 0.2);
+  padding-bottom: 10px;
+}
+
+.card p {
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+/* ================= 全局容器與卡片基底 ================= */
+.main-container{
+  max-width: 1200px;
+  margin: 40px auto;
+  padding: 0 20px;
+}
+
+
+/*卡片共通樣式*/
+.card{
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-gold);
+  border-radius: 10px;
+  padding: 28px 32px;
+  margin-bottom: 30px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+}
+
+.card h2 {
+  color: var(--text-gold);
+  font-size: 22px;
+  font-weight: bold;
+  margin-top: 0;
+  margin-bottom: 16px;
+  letter-spacing: 1px;
+}
+
+.card p {
+  color: var(--text-muted);
+  line-height: 1.7;
+  font-size: 14px;
+}
+
+/* ================= 1. 上方雙卡片區域 (Grid) ================= */
+.top-cards-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr; /* 左邊占2份，右邊占1份 */
+  gap: 25px;
+}
+
+/* 編制概況統計列表 */
+.stats-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.stats-list li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(197, 160, 89, 0.15);
+}
+
+.stats-list li:last-child {
+  border-bottom: none;
+}
+
+.stat-label {
+  color: var(--text-muted);
+  font-size: 14px;
+}
+
+.stat-value {
+  color: var(--text-gold);
+  font-size: 18px;
+  font-weight: bold;
+}
+
+/* ================= 2. 出勤登記系統表單 ================= */
+.card-subtitle {
+  margin-bottom: 24px;
+  font-size: 13px;
+}
+
+.attendance-form {
+  display: flex;
+  gap: 15px;
+  align-items: flex-end;
+  flex-wrap: wrap;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.form-group.flex-grow {
+  flex-grow: 1; /* 備註輸入框自動拉寬 */
+}
+
+.form-group label {
+  color: var(--text-gold-light);
+  font-size: 13px;
+}
+
+/* 輸入框與下拉選單統一風格 */
+.custom-select, 
+.custom-input {
+  background-color: #081017;
+  border: 1px solid rgba(197, 160, 89, 0.4);
+  color: var(--text-white);
+  padding: 10px 14px;
+  border-radius: 4px;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.3s;
+}
+
+.custom-select:focus, 
+.custom-input:focus {
+  border-color: var(--text-gold);
+  box-shadow: 0 0 5px rgba(212, 175, 55, 0.3);
+}
+
+.btn-submit {
+  padding: 11px 24px;
+  white-space: nowrap;
+}
+
+/* ================= 左右分欄卡片排版 ================= */
+
+/* 整張卡片改為 Flex 橫向排列 */
+.badge-card-horizontal {
+  display: flex;
+  align-items: flex-start; /* 讓圖片與右側內容頂端對齊 */
+  gap: 30px;               /* 左右兩欄之間的間距 */
+  padding: 30px;
+}
+
+/* 左欄：固定圖片寬度 */
+.card-left-col {
+  flex-shrink: 0;          /* 確保圖片欄位不會被擠壓 */
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding-top: 5px;        /* 稍微向下微調讓頂部對齊更自然 */
+}
+
+.badge-img-large {
+  width: 200px;            /* 可依需求調整圖片大小 (例如 90px~120px) */
+  height: 200px;
+  object-fit: contain;
+  filter: drop-shadow(0 0 10px rgba(212, 175, 55, 0.3)); /* 金色發光 */
+}
+
+/* 右欄：自動填滿剩餘寬度 */
+.card-right-col {
+  flex-grow: 1;            /* 自動佔滿右側所有空間 */
+}
+
+/* 右欄內部的細節微調 */
+.card-right-col .header-text h2 {
+  color: var(--text-gold);
+  font-size: 24px;
+  font-weight: bold;
+  margin: 0 0 6px 0;
+  letter-spacing: 1.5px;
+}
+
+.card-right-col .star-divider {
+  display: flex;
+  align-items: center;
+  color: var(--text-gold);
+  font-size: 11px;
+  opacity: 0.8;
+}
+
+.card-right-col .star-divider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, var(--border-gold), transparent);
+  margin-left: 8px;
+}
+
+.card-right-col .card-divider {
+  height: 1px;
+  background: linear-gradient(90deg, var(--border-gold) 0%, rgba(197, 160, 89, 0.1) 100%);
+  margin: 12px 0 16px 0;
+}
+
+.unit-title-group h3 {
+  color: #ffffff;
+  font-size: 16px;
+  margin: 0 0 4px 0;
+}
+
+.unit-title-group .en-title {
+  color: var(--text-muted);
+  font-size: 13px;
+  font-weight: normal;
+}
+
+.unit-title-group .nickname {
+  color: var(--text-gold-light);
+  font-size: 14px;
+  font-weight: bold;
+  margin: 0 0 12px 0;
+}
+
+.unit-title-group .en-sub {
+  color: var(--text-muted);
+  font-size: 11px;
+  font-weight: normal;
+}
+
+.badge-tags {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.badge-tags .tag {
+  background-color: rgba(212, 175, 55, 0.12);
+  border: 1px solid rgba(212, 175, 55, 0.4);
+  color: var(--text-gold-light);
+  padding: 3px 10px;
+  border-radius: 15px;
+  font-size: 12px;
+}
+
+.description-block .section-label {
+  color: var(--text-gold);
+  font-size: 12px;
+  font-weight: bold;
+  letter-spacing: 1px;
+  margin-bottom: 6px;
+}
+
+.description-block p {
+  color: var(--text-muted);
+  font-size: 13.5px;
+  line-height: 1.7;
+  margin: 0;
+}
+
+/* ================= 最新新聞公告區塊 ================= */
+.news-card {
+  margin-top: 30px;
+  padding: 35px 40px;
+}
+
+.news-header {
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+.news-header h2 {
+  color: var(--text-gold);
+  font-size: 26px;
+  font-weight: bold;
+  margin: 0 0 6px 0;
+  letter-spacing: 1.5px;
+  border-bottom: none; /* 移除預設底線 */
+}
+
+.news-subtitle {
+  color: var(--text-muted);
+  font-size: 11px;
+  letter-spacing: 2px;
+  margin: 0;
+}
+
+/* 新聞列表 */
+.news-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 25px 0;
+}
+
+.news-item {
+  display: flex;
+  align-items: center;
+  padding: 16px 10px;
+  border-bottom: 1px solid rgba(197, 160, 89, 0.2);
+  transition: background-color 0.25s ease;
+}
+
+.news-item:hover {
+  background-color: rgba(212, 175, 55, 0.05); /* 滑鼠懸停時微亮微金光 */
+}
+
+/* 日期與標籤 */
+.news-meta {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  min-width: 190px;
+  flex-shrink: 0;
+}
+
+.news-date {
+  color: var(--text-muted);
+  font-size: 13px;
+  font-family: monospace, sans-serif;
+}
+
+.news-tag {
+  font-size: 11.5px;
+  padding: 3px 10px;
+  border-radius: 12px;
+  font-weight: bold;
+}
+
+/* 區域動態 標籤 */
+.tag-military {
+  background-color: rgba(13, 110, 253, 0.15);
+  border: 1px solid rgba(13, 110, 253, 0.4);
+  color: #6ea8fe;
+}
+
+/* 重要通知 標籤 */
+.tag-notice {
+  background-color: rgba(220, 53, 69, 0.15);
+  border: 1px solid rgba(220, 53, 69, 0.4);
+  color: #ea868f;
+}
+
+/* 部隊新聞 標籤 */
+.tag-news {
+  background-color: rgba(212, 175, 55, 0.15);
+  border: 1px solid rgba(212, 175, 55, 0.4);
+  color: var(--text-gold-light);
+}
+
+/* 新聞標題連結 */
+.news-title {
+  color: var(--text-white);
+  text-decoration: none;
+  font-size: 15px;
+  flex-grow: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis; /* 文字太長自動變 ... */
+  transition: color 0.2s ease;
+  padding-right: 15px;
+}
+
+.news-item:hover .news-title {
+  color: var(--text-gold); /* 滑鼠 hover 時字體變金色 */
+}
+
+/* 右側箭頭 */
+.news-arrow {
+  color: var(--text-gold);
+  font-size: 16px;
+  opacity: 0.5;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.news-item:hover .news-arrow {
+  opacity: 1;
+  transform: translateX(5px); /* 滑鼠 hover 時箭頭向右微幅滑動 */
+}
+
+/* 查看更多按鈕 */
+.news-more-container {
+  text-align: center;
+}
+
+.btn-news-more {
+  display: inline-block;
+  background-color: transparent;
+  color: var(--text-gold);
+  border: 1px solid var(--border-gold);
+  padding: 10px 32px;
+  border-radius: 20px;
+  text-decoration: none;
+  font-size: 13.5px;
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
+
+.btn-news-more:hover {
+  background-color: var(--btn-gold-bg);
+  color: #000000;
+  box-shadow: 0 0 12px rgba(212, 175, 55, 0.4);
+}
+
+/* ================= 幹部名冊輪播卡片 ================= */
+.officer-card {
+  margin-top: 30px;
+  padding: 35px 40px;
+  overflow: hidden;
+}
+
+.officer-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.officer-header h2 {
+  color: var(--text-gold);
+  font-size: 26px;
+  font-weight: bold;
+  margin: 0 0 6px 0;
+  border-bottom: none;
+}
+
+.officer-subtitle {
+  color: var(--text-muted);
+  font-size: 11px;
+  letter-spacing: 2px;
+  margin: 0;
+}
+
+/* 輪播軌道容器 */
+.officer-carousel {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  padding: 20px 0;
+  box-sizing: border-box;
+}
+
+.officer-track {
+  display: flex;
+  gap: 20px;
+  position: relative;
+  left: 0;
+  transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+  width: max-content;
+  margin: 0;
+}
+
+/* 單個長官卡片 */
+.officer-item {
+  flex: 0 0 220px;
+  height: 280px;
+  border-radius: 12px;
+  overflow: hidden;
+  position: relative;
+  cursor: pointer;
+  opacity: 0.35;
+  transform: scale(0.9);
+  filter: grayscale(80%) brightness(0.7);
+  transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+  border: 1px solid rgba(197, 160, 89, 0.2);
+}
+
+/* 被選中的長官卡片 (亮起 + 放大) */
+.officer-item.active {
+  opacity: 1;
+  transform: scale(1.05);
+  filter: grayscale(0%) brightness(1);
+  border: 2px solid var(--border-gold);
+  box-shadow: 0 8px 25px rgba(212, 175, 55, 0.3);
+}
+
+.officer-img-box {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.officer-img-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* 照片上的文字遮罩 */
+.officer-info-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 20px 15px 15px;
+  background: linear-gradient(0deg, rgba(10, 17, 24, 0.95) 0%, rgba(10, 17, 24, 0.6) 70%, transparent 100%);
+  box-sizing: border-box;
+}
+
+.officer-role {
+  color: var(--text-gold);
+  font-size: 13px;
+  font-weight: bold;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.officer-name {
+  color: var(--text-white);
+  font-size: 18px;
+  font-weight: bold;
+  margin: 0;
+}
+
+/* 底部簡介與控制按鈕區域 */
+.officer-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-top: 25px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(197, 160, 89, 0.2);
+}
+
+.bio-label {
+  color: var(--text-gold);
+  font-size: 13px;
+  font-weight: bold;
+  margin-bottom: 6px;
+}
+
+.bio-text {
+  color: var(--text-muted);
+  font-size: 15px;
+  margin: 0;
+  max-width: 650px;
+  line-height: 1.6;
+}
+
+/* 左右圓形箭頭按鈕 */
+.officer-controls {
+  display: flex;
+  gap: 12px;
+}
+
+.btn-arrow {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid var(--border-gold);
+  background-color: transparent;
+  color: var(--text-gold);
+  font-size: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  line-height: 1;
+}
+
+.btn-arrow:hover {
+  background-color: var(--btn-gold-bg);
+  color: #000;
+  box-shadow: 0 0 12px rgba(212, 175, 55, 0.4);
+}
+
+/* ================= 頁尾 Footer 區塊 ================= */
+.site-footer {
+  background-color: #060a0f; /* 稍深於主背景的顏色 */
+  border-top: 1px solid var(--border-gold);
+  margin-top: 60px;
+  color: var(--text-muted);
+  font-size: 14px;
+}
+
+.footer-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 20px;
+  display: flex;
+  justify-content: space-between;
+  gap: 40px;
+  flex-wrap: wrap;
+}
+
+/* 左側 Brand */
+.footer-brand {
+  flex: 1 1 320px;
+}
+
+.footer-logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 15px;
+}
+
+.footer-logo-img {
+  width: 36px;
+  height: 36px;
+  object-fit: contain;
+}
+
+.footer-logo-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.footer-title {
+  color: var(--text-gold);
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.footer-subtitle {
+  color: var(--text-muted);
+  font-size: 11px;
+}
+
+.footer-desc {
+  line-height: 1.6;
+  margin: 0;
+  font-size: 13px;
+}
+
+/* 中間連結群組 */
+.footer-links-group {
+  display: flex;
+  gap: 50px;
+  flex: 1 1 240px;
+}
+
+.footer-column h4,
+.footer-info h4 {
+  color: var(--text-gold);
+  font-size: 15px;
+  margin: 0 0 15px 0;
+  letter-spacing: 1px;
+}
+
+.footer-column ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-column li {
+  margin-bottom: 8px;
+}
+
+.footer-column a {
+  color: var(--text-muted);
+  text-decoration: none;
+  transition: color 0.2s ease;
+  font-size: 13px;
+}
+
+.footer-column a:hover {
+  color: var(--text-gold-light);
+}
+
+/* 右側系統資訊 */
+.footer-info {
+  flex: 1 1 220px;
+}
+
+.footer-info p {
+  margin: 0 0 8px 0;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+/* 底部宣告條 */
+.footer-bottom {
+  background-color: #030508;
+  border-top: 1px solid rgba(197, 160, 89, 0.15);
+  padding: 15px 20px;
+}
+
+.footer-bottom-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.copyright {
+  margin: 0;
+  font-size: 12px;
+}
+
+.privacy-links {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.privacy-links a {
+  color: var(--text-muted);
+  text-decoration: none;
+  font-size: 12px;
+  transition: color 0.2s ease;
+}
+
+.privacy-links a:hover {
+  color: var(--text-gold);
+}
+
+.privacy-links .divider {
+  color: rgba(197, 160, 89, 0.3);
+  font-size: 12px;
+}
