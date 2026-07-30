@@ -198,7 +198,7 @@
                         </div>
                     </div>
 
-                    <div class="officer-item" data-title="作戰處副處長" data-name="HotDropPotato 上尉" data-desc="曾擔任海軍陸戰第六十六團副團長、陸軍第七十二師作戰處副處長。">
+                    <div class="officer-item" data-title="作戰處副處長" data-name="HotDropPotato 上尉" data-desc="曾擔任海軍陸戰第六十六團ㄉ團長、陸軍第七十二師作戰處副處長。">
                         <div class="officer-img-box">
                             <img src="images/drop.png" alt="作戰處副處長">
                             <div class="officer-info-overlay">
@@ -369,7 +369,7 @@
         items.forEach((item, i) => {
           if (i === index) {
             item.classList.add('active');
-            bioLabel.textContent = `${item.dataset.title} 資歷`;
+            bioLabel.textContent = `${item.dataset.title} 簡介`;
             bioText.textContent = item.dataset.desc;
           } else {
             item.classList.remove('active');
