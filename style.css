@@ -1087,3 +1087,220 @@ nav a:hover, nav a.active {
 
 .prev-btn { left: 15px; }
 .next-btn { right: 15px; }
+
+/* ==================== 幹部名冊卡片樣式 ==================== */
+.page-header {
+    text-align: center;
+    margin: 40px 0 30px;
+}
+
+.page-title {
+    color: var(--text-gold);
+    font-size: 2.2rem;
+    margin-bottom: 8px;
+    letter-spacing: 2px;
+}
+
+.page-subtitle {
+    color: var(--text-muted);
+    font-size: 1rem;
+}
+
+/* 網格排列：自動適應螢幕，手機1欄，電腦3欄 */
+.officer-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 25px;
+    max-width: 1200px;
+    margin: 0 auto 50px;
+    padding: 0 20px;
+}
+
+/* 卡片本體 (可點擊連結) */
+.officer-card {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-gold);
+    border-radius: 8px;
+    text-decoration: none;
+    color: var(--text-white);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+}
+
+.officer-card:hover {
+    transform: translateY(-6px);
+    border-color: #f3e5ab; /* 懸停時邊框變亮金色 */
+    box-shadow: 0 8px 25px rgba(212, 175, 55, 0.25);
+}
+
+/* 人物照片容器與軍銜標籤 */
+.officer-img-wrapper {
+    position: relative;
+    width: 100%;
+    height: 280px;
+    background-color: #0d1620;
+    overflow: hidden;
+}
+
+.officer-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top center;
+    transition: transform 0.5s ease;
+}
+
+.officer-card:hover .officer-img {
+    transform: scale(1.05); /* 懸停時照片微放大 */
+}
+
+/* 右上角軍銜標籤 */
+.rank-badge {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background-color: rgba(10, 17, 24, 0.85);
+    color: var(--text-gold);
+    border: 1px solid var(--border-gold);
+    padding: 4px 10px;
+    font-size: 0.85rem;
+    font-weight: bold;
+    border-radius: 4px;
+    backdrop-filter: blur(4px);
+}
+
+/* 文字資訊區塊 */
+.officer-info {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.officer-title {
+    color: var(--text-gold);
+    font-size: 1rem;
+    margin: 0 0 5px 0;
+    font-weight: 500;
+}
+
+.officer-name {
+    color: var(--text-white);
+    font-size: 1.5rem;
+    margin: 0 0 12px 0;
+    letter-spacing: 1px;
+}
+
+.officer-meta {
+    font-size: 0.85rem;
+    margin-bottom: 12px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid rgba(197, 160, 89, 0.2);
+}
+
+.meta-label {
+    color: var(--text-muted);
+}
+
+.meta-value {
+    color: #e6f1ff;
+    font-family: monospace;
+}
+
+.officer-desc {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    line-height: 1.5;
+    margin: 0 0 15px 0;
+    flex-grow: 1;
+}
+
+/* 卡片底部「查看完整檔案」按鈕感 */
+.card-more {
+    color: var(--text-gold);
+    font-size: 0.85rem;
+    font-weight: bold;
+    text-align: right;
+    transition: color 0.3s ease;
+}
+
+.officer-card:hover .card-more {
+    color: #ffffff;
+}
+
+/* ==================== 履歷與經歷時間軸/清單樣式 ==================== */
+.officer-experience-section {
+    border-top: 1px solid rgba(197, 160, 89, 0.3);
+    padding-top: 25px;
+    margin-top: 20px;
+}
+
+.section-title {
+    color: var(--text-gold);
+    font-size: 1.25rem;
+    margin-top: 0;
+    margin-bottom: 20px;
+    letter-spacing: 1px;
+}
+
+/* 移除預設列表點，自訂軍武金/藍風格的圓點 */
+.timeline-list {
+    list-style: none;
+    padding-left: 20px;
+    margin: 0;
+    position: relative;
+}
+
+/* 每項經歷前方的金色圓點 */
+.timeline-list li {
+    position: relative;
+    padding-left: 15px;
+    margin-bottom: 22px;
+}
+
+.timeline-list li::before {
+    content: "";
+    position: absolute;
+    left: -15px;
+    top: 6px;
+    width: 8px;
+    height: 8px;
+    background-color: var(--text-gold);
+    border-radius: 50%;
+    box-shadow: 0 0 8px rgba(212, 175, 55, 0.6); /* 圓點微發光效果 */
+}
+
+/* 標題與日期欄位 (彈性佈局，兩端對齊) */
+.timeline-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-bottom: 6px;
+}
+
+/* 主要標題：字體較大、白色亮體 */
+.timeline-title {
+    color: var(--text-white);
+    font-size: 1.05rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+/* 日期時間：次級字體、灰藍色、 monospace 字型 */
+.timeline-date {
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    font-family: monospace;
+}
+
+/* 內容描述：小字體、次要顏色、加強行高 */
+.timeline-desc {
+    color: var(--text-muted);
+    font-size: 0.92rem;
+    line-height: 1.6;
+    margin: 0;
+}
