@@ -3,16 +3,303 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>陸軍裝甲步兵第七十二師-資訊網</title>
+    <title>陸軍裝甲步兵第七十二師-內部公告</title>
     <link rel="icon" href="../images/72nd-web-icon-.png" type="image/png">
     <link rel="stylesheet" href="../style.css">
+    <style>
+        /* 內部公告頁面專用樣式 */
+        .announce-container {
+            max-width: 1000px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .action-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.3);
+        }
+
+        .btn-create-announce {
+            background-color: var(--text-gold, #d4af37);
+            color: #121a24;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1rem;
+            font-weight: bold;
+            border-radius: 4px;
+            cursor: pointer;
+            display: none; /* 預設隱藏，驗證權限後顯示 */
+            transition: all 0.3s ease;
+        }
+
+        .btn-create-announce:hover {
+            background-color: #f3e5ab;
+            box-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
+        }
+
+        /* 公告新聞卡片列表 */
+        .announce-list {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        .announce-card {
+            background: rgba(18, 26, 36, 0.95);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            border-left: 5px solid var(--text-gold, #d4af37);
+            border-radius: 8px;
+            padding: 25px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+            transition: transform 0.2s ease;
+            position: relative;
+        }
+
+        .announce-card:hover {
+            transform: translateY(-3px);
+            border-color: var(--text-gold, #d4af37);
+        }
+
+        .announce-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            font-size: 0.9rem;
+            color: #8a99ad;
+            margin-bottom: 12px;
+            padding-bottom: 8px;
+            padding-right: 120px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .announce-unit {
+            color: var(--text-gold, #d4af37);
+            font-weight: bold;
+            font-size: 1.05rem;
+        }
+
+        .announce-author {
+            color: #a0aec0;
+            margin-left: 8px;
+        }
+
+        .announce-title {
+            color: #ffffff;
+            font-size: 1.5rem;
+            margin: 0 0 15px 0;
+            font-weight: bold;
+        }
+
+        .announce-content {
+            color: #c5d1e0;
+            line-height: 1.8;
+            white-space: pre-line;
+            font-size: 1.05rem;
+        }
+
+        /* 公告操作按鈕區域 */
+        .announce-actions {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            gap: 8px;
+            opacity: 0;
+            transition: opacity 0.2s;
+            z-index: 10;
+        }
+
+        .announce-card:hover .announce-actions {
+            opacity: 1;
+        }
+
+        .btn-announce-edit, .btn-announce-del {
+            padding: 4px 10px;
+            font-size: 0.85rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.2s;
+        }
+
+        .btn-announce-edit {
+            background: rgba(212, 175, 55, 0.15);
+            color: var(--text-gold, #d4af37);
+            border: 1px solid var(--border-gold, #d4af37);
+        }
+        .btn-announce-edit:hover { background: var(--border-gold, #d4af37); color: #000; }
+
+        .btn-announce-del {
+            background: rgba(244, 67, 54, 0.15);
+            color: #f44336;
+            border: 1px solid #f44336;
+        }
+        .btn-announce-del:hover { background: #f44336; color: #fff; }
+
+        /* 未登入提示卡片專用樣式 */
+        .login-gate-card {
+            background: rgba(18, 26, 36, 0.95);
+            border: 1px solid var(--border-gold, #d4af37);
+            border-radius: 8px;
+            padding: 50px 30px;
+            text-align: center;
+            box-shadow: 0 0 25px rgba(0, 0, 0, 0.6);
+            margin-top: 20px;
+        }
+
+        .login-gate-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+        }
+
+        .login-gate-title {
+            color: var(--text-gold, #d4af37);
+            font-size: 1.8rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .login-gate-desc {
+            color: #c5d1e0;
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        .btn-go-login {
+            display: inline-block;
+            background: var(--text-gold, #d4af37);
+            color: #121a24;
+            font-size: 1.1rem;
+            font-weight: bold;
+            padding: 12px 32px;
+            border-radius: 4px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+        }
+
+        .btn-go-login:hover {
+            background: #f3e5ab;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(212, 175, 55, 0.5);
+        }
+
+        /* 彈窗 (Modal) 樣式 */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+        }
+
+        .modal-box {
+            background: #121a24;
+            border: 1px solid var(--border-gold, #d4af37);
+            border-radius: 8px;
+            width: 90%;
+            max-width: 650px;
+            padding: 30px;
+            box-shadow: 0 0 30px rgba(0,0,0,0.9);
+            color: #fff;
+        }
+
+        .modal-header {
+            font-size: 1.5rem;
+            color: var(--text-gold, #d4af37);
+            font-weight: bold;
+            margin-bottom: 25px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.3);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            color: #e0e6ed;
+            margin-bottom: 10px;
+            font-size: 1rem;
+            font-weight: bold;
+        }
+
+        .form-group input, .form-group textarea {
+            width: 100%;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(212, 175, 55, 0.5);
+            color: #fff;
+            padding: 12px 15px;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 1rem;
+            outline: none;
+        }
+
+        .form-group input:focus, .form-group textarea:focus {
+            border-color: var(--text-gold, #d4af37);
+            box-shadow: 0 0 8px rgba(212, 175, 55, 0.3);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 150px;
+        }
+
+        .modal-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 15px;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .btn-submit {
+            background: #28a745;
+            color: #fff;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 4px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .btn-cancel {
+            background: #6c757d;
+            color: #fff;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        @media (max-width: 600px) {
+            .announce-card { padding: 15px; }
+            .announce-title { font-size: 1.25rem; }
+            .announce-meta { padding-right: 0; }
+            .announce-actions { position: static; margin-bottom: 10px; justify-content: flex-end; opacity: 1; }
+        }
+    </style>
 </head>
 <body>
     <header id="navbar">
         <div class="header-container">
             <div class="logo">
                 <img src="../images/72nd-logo.png" alt="Logo" class="logo-img">
-
                 <div class="logo-text">
                     <span class="logo-title">陸軍裝甲步兵第七十二師</span>
                     <span class="logo-subtitle">72nd Armored Infantry Division, ROCA</span>
@@ -37,7 +324,69 @@
         </div>
     </header>
 
-        <footer class="site-footer">
+    <main class="main-container announce-container">
+        <br><br><br>
+        
+        <div class="action-header" id="announce-header" style="display: none;">
+            <h1 style="color: var(--text-gold, #d4af37); margin: 0; font-size: 2rem; font-weight: bold;">內部公告列表</h1>
+            <button id="btn-open-modal" class="btn-create-announce">發布新公告</button>
+        </div>
+
+        <div id="announce-list" class="announce-list">
+            <div style="text-align: center; color: #8a99ad; padding: 50px;">正在驗證權限...</div>
+        </div>
+    </main>
+
+    <div id="announce-modal" class="modal-overlay" style="display: none;">
+        <div class="modal-box">
+            <div class="modal-header">發布新內部公告</div>
+            <form id="announce-form">
+                <div class="form-group">
+                    <label for="announce-unit-input">發布單位</label>
+                    <input type="text" id="announce-unit-input" value="陸軍裝甲步兵第七十二師" placeholder="例如：陸軍裝甲步兵第七十二師 / 師部司令部" required>
+                </div>
+                <div class="form-group">
+                    <label for="announce-title-input">公告標題</label>
+                    <input type="text" id="announce-title-input" placeholder="例如：【訓練令】下週演習注意事項" required>
+                </div>
+                <div class="form-group">
+                    <label for="announce-content-input">公告詳細內容</label>
+                    <textarea id="announce-content-input" rows="8" placeholder="請輸入詳細通告或命令內容..." required></textarea>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" id="btn-close-modal" class="btn-cancel">取消</button>
+                    <button type="submit" class="btn-submit">確認發布</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="edit-announce-modal" class="modal-overlay" style="display: none;">
+        <div class="modal-box">
+            <div class="modal-header">編輯內部公告</div>
+            <form id="edit-announce-form">
+                <input type="hidden" id="edit-announce-id">
+                <div class="form-group">
+                    <label for="edit-announce-unit-input">發布單位</label>
+                    <input type="text" id="edit-announce-unit-input" required>
+                </div>
+                <div class="form-group">
+                    <label for="edit-announce-title-input">公告標題</label>
+                    <input type="text" id="edit-announce-title-input" required>
+                </div>
+                <div class="form-group">
+                    <label for="edit-announce-content-input">公告詳細內容</label>
+                    <textarea id="edit-announce-content-input" rows="8" required></textarea>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" id="btn-close-edit-modal" class="btn-cancel">取消</button>
+                    <button type="submit" class="btn-submit">儲存變更</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <footer class="site-footer">
         <div class="footer-container">
             <div class="footer-brand">
                 <div class="footer-logo">
@@ -57,18 +406,18 @@
                     <h4>快速連結</h4>
                     <ul>
                         <li><a href="../index.html">首頁</a></li>
-                        <li><a href="../pages/about.html">部隊簡介</a></li>
-                        <li><a href="../pages/news.html">部隊新聞</a></li>
-                        <li><a href="../pages/announce.html">內部公告</a></li>
+                        <li><a href="about.html">部隊簡介</a></li>
+                        <li><a href="news.html">部隊新聞</a></li>
+                        <li><a href="announce.html">內部公告</a></li>
                     </ul>
                 </div>
                 <div class="footer-column">
                     <h4>線上服務</h4>
                     <ul>
-                        <li><a href="../pages/officers.html">幹部名冊</a></li>
-                        <li><a href="../pages/leave.html">請假登記</a></li>
-                        <li><a href="../pages/duty-record.html">值勤紀錄</a></li>
-                        <li><a href="../pages/login.html">官兵登入</a></li>
+                        <li><a href="officers.html">幹部名冊</a></li>
+                        <li><a href="leave.html">請假登記</a></li>
+                        <li><a href="duty-record.html">值勤紀錄</a></li>
+                        <li><a href="login.html">官兵登入</a></li>
                     </ul>
                 </div>
             </div>
@@ -94,7 +443,6 @@
     <script>
       window.addEventListener('scroll', function() {
         const header = document.getElementById('navbar');
-        // 當頁面往下滾動超過 50px 時，幫 header 加上 scrolled 類別
         if (window.scrollY > 50) {
           header.classList.add('scrolled');
         } else {
@@ -109,5 +457,240 @@
     <script src="../js/firebase-config.js"></script>
     <script src="../js/auth.js"></script>
 
+    <script>
+        var currentUserData = null;
+        var isAdmin = false;
+
+        document.addEventListener("DOMContentLoaded", function() {
+            var modal = document.getElementById("announce-modal");
+            var btnOpen = document.getElementById("btn-open-modal");
+            var btnClose = document.getElementById("btn-close-modal");
+            var form = document.getElementById("announce-form");
+
+            if (btnOpen) btnOpen.addEventListener("click", function() { modal.style.display = "flex"; });
+            if (btnClose) btnClose.addEventListener("click", function() { modal.style.display = "none"; });
+            if (form) form.addEventListener("submit", handleCreateAnnouncement);
+
+            var btnCloseEdit = document.getElementById("btn-close-edit-modal");
+            var editForm = document.getElementById("edit-announce-form");
+            if (btnCloseEdit) btnCloseEdit.addEventListener("click", function() { document.getElementById("edit-announce-modal").style.display = "none"; });
+            if (editForm) editForm.addEventListener("submit", handleUpdateAnnouncement);
+        });
+
+        // 監聽 Firebase 身分與權限
+        auth.onAuthStateChanged(function(user) {
+            isAdmin = false;
+            var btnOpen = document.getElementById("btn-open-modal");
+            var announceHeader = document.getElementById("announce-header");
+
+            if (user) {
+                // 已登入：顯示標題區域，並檢查是否為管理員
+                if (announceHeader) announceHeader.style.display = "flex";
+
+                db.collection("users").doc(user.uid).get().then(function(docSnap) {
+                    if (docSnap.exists) {
+                        currentUserData = docSnap.data();
+                        
+                        if (currentUserData.role === "admin" || 
+                           (currentUserData.rank && currentUserData.rank.includes("指揮官")) || 
+                           (currentUserData.duty && currentUserData.duty.includes("教官"))) {
+                            isAdmin = true;
+                            if (btnOpen) btnOpen.style.display = "block";
+                        }
+                    }
+                    loadAnnouncements();
+                }).catch(function(err) {
+                    console.error("權限檢查失敗:", err);
+                    loadAnnouncements();
+                });
+            } else {
+                // 未登入：隱藏標題區域，顯示「需要登入」提示卡片
+                currentUserData = null;
+                if (announceHeader) announceHeader.style.display = "none";
+                if (btnOpen) btnOpen.style.display = "none";
+                
+                renderLoginGate();
+            }
+        });
+
+        // 渲染未登入提示頁面
+        function renderLoginGate() {
+            var listContainer = document.getElementById("announce-list");
+            listContainer.innerHTML = `
+                <div class="login-gate-card">
+                    <div class="login-gate-icon">🔒</div>
+                    <div class="login-gate-title">內部機密資訊</div>
+                    <div class="login-gate-desc">您需要登入官兵帳號才能解鎖並查看內部公告內容。</div>
+                    <a href="login.html" class="btn-go-login">前往官兵登入</a>
+                </div>
+            `;
+        }
+
+        // 載入公告
+        function loadAnnouncements() {
+            var listContainer = document.getElementById("announce-list");
+
+            db.collection("announcements").orderBy("createdAt", "desc").get()
+                .then(function(querySnapshot) {
+                    if (querySnapshot.empty) {
+                        listContainer.innerHTML = '<div style="text-align: center; color: #8a99ad; padding: 50px;">目前尚無任何內部公告。</div>';
+                        return;
+                    }
+
+                    var html = "";
+                    querySnapshot.forEach(function(docSnap) {
+                        var data = docSnap.data();
+                        var docId = docSnap.id;
+                        
+                        var rawUnit = data.unit || "陸軍裝甲步兵第七十二師";
+                        var formattedUnit = "《" + rawUnit + "》";
+
+                        var dateStr = "剛剛";
+                        if (data.createdAt) {
+                            var dateObj = data.createdAt.toDate ? data.createdAt.toDate() : new Date(data.createdAt);
+                            dateStr = dateObj.toLocaleDateString("zh-TW", {
+                                year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit'
+                            });
+                        }
+
+                        var actionButtonsHTML = "";
+                        if (isAdmin === true) {
+                            actionButtonsHTML = `
+                                <div class="announce-actions">
+                                    <button class="btn-announce-edit" onclick="openEditModal('${docId}')">編輯</button>
+                                    <button class="btn-announce-del" onclick="deleteAnnouncement('${docId}')">刪除</button>
+                                </div>
+                            `;
+                        }
+
+                        html += `
+                            <div class="announce-card">
+                                ${actionButtonsHTML}
+                                <div class="announce-meta">
+                                    <div>
+                                        <span class="announce-unit">${escapeHtml(formattedUnit)}</span>
+                                    </div>
+                                    <span>${dateStr}</span>
+                                </div>
+                                <h3 class="announce-title">${escapeHtml(data.title)}</h3>
+                                <div class="announce-content">${escapeHtml(data.content)}</div>
+                            </div>
+                        `;
+                    });
+
+                    listContainer.innerHTML = html;
+                })
+                .catch(function(error) {
+                    console.error("載入公告失敗:", error);
+                    listContainer.innerHTML = '<div style="text-align: center; color: #8a99ad; padding: 50px;">載入公告失敗，請重新整理頁面。</div>';
+                });
+        }
+
+        // 發布公告
+        function handleCreateAnnouncement(e) {
+            e.preventDefault();
+            var unit = document.getElementById("announce-unit-input").value.trim();
+            var title = document.getElementById("announce-title-input").value.trim();
+            var content = document.getElementById("announce-content-input").value.trim();
+
+            if (!unit || !title || !content) {
+                alert("請填寫所有欄位！");
+                return;
+            }
+
+            var authorName = currentUserData ? (currentUserData.robloxId || "管理員") : "管理員";
+
+            db.collection("announcements").add({
+                unit: unit,
+                title: title,
+                content: content,
+                author: authorName,
+                createdAt: firebase.firestore.FieldValue.serverTimestamp()
+            })
+            .then(function() {
+                alert("公告發布成功！");
+                document.getElementById("announce-form").reset();
+                document.getElementById("announce-modal").style.display = "none";
+                loadAnnouncements();
+            })
+            .catch(function(error) {
+                alert("發布失敗：" + error.message);
+            });
+        }
+
+        // 打開編輯彈窗
+        function openEditModal(docId) {
+            if (!isAdmin) return;
+            
+            db.collection("announcements").doc(docId).get().then(function(docSnap) {
+                if (docSnap.exists) {
+                    var data = docSnap.data();
+                    document.getElementById("edit-announce-id").value = docId;
+                    document.getElementById("edit-announce-unit-input").value = data.unit || "陸軍裝甲步兵第七十二師";
+                    document.getElementById("edit-announce-title-input").value = data.title || "";
+                    document.getElementById("edit-announce-content-input").value = data.content || "";
+                    document.getElementById("edit-announce-modal").style.display = "flex";
+                }
+            }).catch(function(err) {
+                console.error("讀取公告資料失敗:", err);
+            });
+        }
+
+        // 儲存編輯變更
+        function handleUpdateAnnouncement(e) {
+            e.preventDefault();
+            if (!isAdmin) return;
+
+            var docId = document.getElementById("edit-announce-id").value;
+            var newUnit = document.getElementById("edit-announce-unit-input").value.trim();
+            var newTitle = document.getElementById("edit-announce-title-input").value.trim();
+            var newContent = document.getElementById("edit-announce-content-input").value.trim();
+
+            if (!newUnit || !newTitle || !newContent) {
+                alert("請填寫所有欄位！");
+                return;
+            }
+
+            db.collection("announcements").doc(docId).update({
+                unit: newUnit,
+                title: newTitle,
+                content: newContent
+            })
+            .then(function() {
+                alert("公告更新成功！");
+                document.getElementById("edit-announce-modal").style.display = "none";
+                loadAnnouncements();
+            })
+            .catch(function(error) {
+                alert("更新失敗：" + error.message);
+            });
+        }
+
+        // 刪除公告
+        function deleteAnnouncement(docId) {
+            if (!isAdmin) return;
+
+            if (confirm("🚨 警告：確定要刪除這則公告嗎？\n刪除後將無法還原。")) {
+                db.collection("announcements").doc(docId).delete()
+                .then(function() {
+                    alert("公告已成功刪除。");
+                    loadAnnouncements();
+                })
+                .catch(function(error) {
+                    alert("刪除失敗：" + error.message);
+                });
+            }
+        }
+
+        function escapeHtml(text) {
+            if (!text) return "";
+            return text
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+        }
+    </script>
 </body>
 </html>
