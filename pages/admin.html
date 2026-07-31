@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>陸軍裝甲步兵第七十二師 - 管理員後台</title>
+    <link rel="icon" href="../images/72nd-web-icon-.png" type="image/png">
+    <link rel="stylesheet" href="../style.css">
+    <style>
+        .admin-container {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 20px;
+            background: rgba(18, 26, 36, 0.95);
+            border: 1px solid var(--border-gold, #d4af37);
+            border-radius: 8px;
+            color: #fff;
+        }
+        .pending-list {
+            list-style: none;
+            padding: 0;
+        }
+    </style>
+</head>
+<body>
+    <header id="navbar">
+        <div class="header-container">
+            <div class="logo">
+                <img src="../images/72nd-logo.png" alt="Logo" class="logo-img">
+
+                <div class="logo-text">
+                    <span class="logo-title">陸軍裝甲步兵第七十二師</span>
+                    <span class="logo-subtitle">72nd Armored Infantry Division, ROCA</span>
+                </div>
+            </div>
+            <nav>
+                <a href="../index.html">首頁</a>
+                <a href="about.html">部隊簡介</a>
+                <a href="news.html">部隊新聞</a>
+                <a href="announce.html">內部公告</a>
+                <a href="officers.html">幹部名冊</a>
+                <a href="duty-record.html">值勤紀錄</a>
+                <a href="leave.html">請假登記</a>
+
+                <a href="admin.html" class="active" id="btn-admin-link" style="display: none; font-weight: bold;">管理後台</a>
+                <a href="login.html" id="btn-login" class="btn-login">登入</a>
+
+                <div id="nav-user-info" style="display: none; align-items: center; gap: 12px; margin-left: 20px;">
+                    <a href="pages/profile.html" id="nav-user-name" style="color: var(--text-gold); font-weight: bold; text-decoration: underline;"></a>
+                    <button id="btn-logout" class="btn-login" style="cursor: pointer;">登出</button>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <br>
+    <br>
+    <br>
+    <main>
+        <div class="admin-container">
+            <div id="admin-not-logged-in" style="text-align: center; padding: 40px;">
+                <h2>⚠️ 存取被拒絕</h2>
+                <p>您尚未登入，或帳號不具備管理員身分 (role: admin)。</p>
+                <a href="login.html" class="btn-login" style="display: inline-block; margin-top: 15px; padding: 8px 16px;">前往登入</a>
+            </div>
+
+            <div id="admin-content-approved" style="display: none;">
+                <h2 style="border-bottom: 2px solid var(--border-gold, #d4af37); padding-bottom: 10px;">待審核官兵註冊名單</h2>
+                <p>請確認新註冊成員的 Roblox ID 後點擊核准：</p>
+                
+                <ul id="pending-users-list" class="pending-list" style="margin-bottom: 40px;">
+                    <li style="color: #aaa; padding: 10px;">載入待審核名單中...</li>
+                </ul>
+
+                <h2 style="border-bottom: 2px solid var(--border-gold, #d4af37); padding-bottom: 10px;">所有成員帳號列表</h2>
+                <div style="overflow-x: auto;">
+                    <table style="width: 100%; border-collapse: collapse; margin-top: 15px; color: #fff; text-align: left;">
+                        <thead>
+                            <tr style="background: rgba(212, 175, 55, 0.2); border-bottom: 2px solid var(--border-gold, #d4af37);">
+                                <th style="padding: 10px;">Roblox ID</th>
+                                <th style="padding: 10px;">身份 (Role)</th>
+                                <th style="padding: 10px;">狀態 (Status)</th>
+                                <th style="padding: 10px;">操作</th>
+                            </tr>
+                        </thead>
+                        <tbody id="all-users-table-body">
+                            <tr>
+                                <td colspan="4" style="padding: 15px; text-align: center; color: #aaa;">載入帳號資料中...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>    
+        </div>
+    </main>
+
+        <footer class="site-footer">
+        <div class="footer-container">
+            <div class="footer-brand">
+                <div class="footer-logo">
+                    <img src="../images/72nd-logo.png" alt="Logo" class="footer-logo-img">
+                    <div class="footer-logo-text">
+                        <span class="footer-title">陸軍裝甲步兵第七十二師</span>
+                        <span class="footer-subtitle">72nd Armored Infantry Division, ROCA</span>
+                    </div>
+                </div>
+                <p class="footer-desc">
+                    本網站為陸軍裝甲步兵第七十二師內部資訊服務網，提供部隊最新動態、重要公告與幹部名冊查詢服務。
+                </p>
+            </div>
+
+            <div class="footer-links-group">
+                <div class="footer-column">
+                    <h4>快速連結</h4>
+                    <ul>
+                        <li><a href="../index.html">首頁</a></li>
+                        <li><a href="../pages/about.html">部隊簡介</a></li>
+                        <li><a href="../pages/news.html">部隊新聞</a></li>
+                        <li><a href="../pages/announce.html">內部公告</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>線上服務</h4>
+                    <ul>
+                        <li><a href="../pages/officers.html">幹部名冊</a></li>
+                        <li><a href="../pages/leave.html">請假登記</a></li>
+                        <li><a href="../pages/duty-record.html">值勤紀錄</a></li>
+                        <li><a href="../pages/login.html">官兵登入</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-info">
+                <h4>系統資訊</h4>
+                <p>地址：上海市閘北營區陸軍裝甲步兵第七十二師部</p>
+                <p>總機電話：(02) 6767-6767</p>
+                <p>服務時間：週一至週日 00:00 - 24:00 全年無休</p>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <div class="footer-bottom-container">
+                <p class="copyright">
+                    &copy; 115 陸軍裝甲步兵第七十二師 版權所有. 建議使用 Chrome / Edge 瀏覽器.
+                </p>
+                <div class="privacy-links">網頁架構者: Charles1228966</div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+      window.addEventListener('scroll', function() {
+        const header = document.getElementById('navbar');
+        // 當頁面往下滾動超過 50px 時，幫 header 加上 scrolled 類別
+        if (window.scrollY > 50) {
+          header.classList.add('scrolled');
+        } else {
+          header.classList.remove('scrolled');
+        }
+      });
+    </script>
+
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+    
+    <script src="../js/firebase-config.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/admin-logic.js"></script>
+
+</body>
+</html>

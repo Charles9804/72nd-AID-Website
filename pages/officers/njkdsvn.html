@@ -21,12 +21,18 @@
             <nav>
                 <a href="../../index.html">首頁</a>
                 <a href="../about.html">部隊簡介</a>
-                <a href="../news.html" class="active">部隊新聞</a>
+                <a href="../news.html">部隊新聞</a>
                 <a href="../announce.html">內部公告</a>
-                <a href="../officers.html">幹部名冊</a>
+                <a href="../officers.html" class="active">幹部名冊</a>
                 <a href="../duty-record.html">值勤紀錄</a>
                 <a href="../leave.html">請假登記</a>
-                <a href="../login.html" class="btn-login">登入</a>
+
+                <a href="admin.html" id="btn-admin-link" style="display: none; font-weight: bold;">管理後台</a>
+
+                <div id="nav-user-info" style="display: none; align-items: center; gap: 12px; margin-left: 20px;">
+                    <a href="profile.html" id="nav-user-name" style="color: var(--text-gold); font-weight: bold; text-decoration: underline;"></a>
+                    <button id="btn-logout" class="btn-login" style="cursor: pointer;">登出</button>
+                </div>
             </nav>
         </div>
     </header>
@@ -47,7 +53,7 @@
                     <h3 style="color: var(--text-white); margin-bottom: 20px;">陸軍裝甲步兵第七十二師 戰車殲擊營 營長</h3>
 
                     <div style="background: rgba(0,0,0,0.2); padding: 15px; border-radius: 6px; margin-bottom: 20px;">
-                        <p><strong>軍職編號：</strong> 72ND-AID-006</p>
+                        <p><strong>軍職編號：</strong> 72ND-AID-000</p>
                         <p><strong>所屬單位：</strong> 戰車殲擊營</p>
                         <p><strong>任職日期：</strong> 民國 39 年 07 月 01 日</p>
                         <p><strong>個性留言：</strong> N/A</p>
@@ -60,18 +66,26 @@
                         <ul class="timeline-list">
                             <li>
                                 <div class="timeline-header">
-                                    <span class="timeline-title">陸軍裝甲步兵第七十二師 戰車殲擊營 第一任營長</span>
+                                    <span class="timeline-title">第七十二機械化步兵旅  教官</span>
                                 </div>
                                 <p class="timeline-desc">
-                                    此人很懶，什麼都沒留下。
+                                    
                                 </p>
                             </li>
                             <li>
                                 <div class="timeline-header">
-                                    <span class="timeline-title">空軍司令部 教官</span>
+                                    <span class="timeline-title">第七十二機械化步兵旅 第二營 第六任營長</span>
                                 </div>
                                 <p class="timeline-desc">
-                                    此人很懶，什麼都沒留下。
+                                    
+                                </p>
+                            </li>
+                            <li>
+                                <div class="timeline-header">
+                                    <span class="timeline-title">裝甲步兵第七十二師 戰車殲擊營  第一任營長</span>
+                                </div>
+                                <p class="timeline-desc">
+                                    
                                 </p>
                             </li>
                         </ul>
@@ -146,6 +160,12 @@
         }
       });
     </script>
+
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+    <script src="../../js/firebase-config.js"></script>
+    <script src="../../js/auth.js"></script>
 
 </body>
 </html>

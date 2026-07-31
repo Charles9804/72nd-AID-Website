@@ -21,12 +21,18 @@
             <nav>
                 <a href="../../index.html">首頁</a>
                 <a href="../about.html">部隊簡介</a>
-                <a href="../news.html" class="active">部隊新聞</a>
+                <a href="../news.html">部隊新聞</a>
                 <a href="../announce.html">內部公告</a>
-                <a href="../officers.html">幹部名冊</a>
+                <a href="../officers.html" class="active">幹部名冊</a>
                 <a href="../duty-record.html">值勤紀錄</a>
                 <a href="../leave.html">請假登記</a>
-                <a href="../login.html" class="btn-login">登入</a>
+
+                <a href="admin.html" id="btn-admin-link" style="display: none; font-weight: bold;">管理後台</a>
+
+                <div id="nav-user-info" style="display: none; align-items: center; gap: 12px; margin-left: 20px;">
+                    <a href="profile.html" id="nav-user-name" style="color: var(--text-gold); font-weight: bold; text-decoration: underline;"></a>
+                    <button id="btn-logout" class="btn-login" style="cursor: pointer;">登出</button>
+                </div>
             </nav>
         </div>
     </header>
@@ -154,6 +160,12 @@
         }
       });
     </script>
+
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+    <script src="../../js/firebase-config.js"></script>
+    <script src="../../js/auth.js"></script>
 
 </body>
 </html>

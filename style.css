@@ -1304,3 +1304,47 @@ nav a:hover, nav a.active {
     line-height: 1.6;
     margin: 0;
 }
+
+/* style.css 約最後面位置 */
+.user-nav-block {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-left: 20px; /* 與原本登入按鈕位置一致 */
+}
+
+.user-name-text {
+    color: var(--text-gold);
+    font-size: 14px;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+}
+
+.btn-logout-small {
+    background-color: transparent;
+    border: 1px solid var(--border-gold);
+    color: var(--text-white);
+    padding: 4px 10px;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 11px;
+    transition: all 0.2s ease;
+}
+
+.btn-logout-small:hover {
+    background-color: var(--btn-gold-bg);
+    color: #000;
+}
+
+/* 導覽列與使用者資訊間距優化 */
+nav {
+    display: flex;
+    align-items: center;
+    gap: 15px; /* 增加選項之間的預設間距 */
+}
+
+#nav-user-info {
+    margin-left: 25px; /* 強制讓歡迎區塊與左邊的選單拉開 25px 距離 */
+    padding-left: 15px;
+    border-left: 1px solid rgba(212, 175, 55, 0.3); /* 選填：左側加上淡金色分隔線，更有質感 */
+}

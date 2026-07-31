@@ -26,7 +26,14 @@
                 <a href="pages/officers.html">幹部名冊</a>
                 <a href="pages/duty-record.html">值勤紀錄</a>
                 <a href="pages/leave.html">請假登記</a>
-                <a href="pages/login.html" class="btn-login">登入</a>
+
+                <a href="pages/admin.html" id="btn-admin-link" style="display: none; font-weight: bold;">管理後台</a>
+                <a href="pages/login.html" id="btn-login" class="btn-login">登入</a>
+
+                <div id="nav-user-info" style="display: none; align-items: center; gap: 12px; margin-left: 20px;">
+                    <a href="pages/profile.html" id="nav-user-name" style="color: var(--text-gold); font-weight: bold; text-decoration: underline;"></a>
+                    <button id="btn-logout" class="btn-login" style="cursor: pointer;">登出</button>
+                </div>
             </nav>
         </div>
     </header>
@@ -48,7 +55,7 @@
                 與全體官兵並肩守護疆土。查看最近新聞以及幹部名冊。
             </p>
             <div class="hero-buttons">
-                <a href="pages/duty-record.html"><button class="btn-gold">前往執勤紀錄</button></a>
+                <a href="pages/login.html"><button class="btn-gold">前往登入帳號</button></a>
                 <a href="pages/officers.html"><button class="btn-outline-gold">查看幹部名冊</button></a>
             </div>
         </div>
@@ -219,7 +226,7 @@
                     </div>
                     <div class="officer-item" data-title="裝甲步兵營 副營長" data-name="Kfuyttffyu 中尉" data-desc="主掌心理輔導、新聞傳播與官兵福祉照護。">
                         <div class="officer-img-box">
-                            <img src="images/Military-personnel-icon.png" alt="裝甲步兵營 副營長">
+                            <img src="images/kfu.png" alt="裝甲步兵營 副營長">
                             <div class="officer-info-overlay">
                                 <span class="officer-role">裝甲步兵營 副營長</span>
                                 <h3 class="officer-name">Kfuyttffyu 中尉</h3>
@@ -412,6 +419,12 @@
       // 視窗大小改變時重新計算置中
       window.addEventListener('resize', () => updateCarousel(currentIndex));
     </script>
-            
+    
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+
+    <script src="js/firebase-config.js"></script>
+    <script src="js/auth.js"></script>
 </body>
 </html>

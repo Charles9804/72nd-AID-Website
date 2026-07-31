@@ -26,10 +26,37 @@
                 <a href="officers.html">幹部名冊</a>
                 <a href="duty-record.html">值勤紀錄</a>
                 <a href="leave.html">請假登記</a>
-                <a href="login.html" class="btn-login">登入</a>
+
+                <a href="login.html" id="btn-login" class="btn-login">登入</a>
+
+                <div id="nav-user-info" style="display: none; align-items: center; gap: 10px;">
+                    <span id="nav-user-name" style="color: var(--text-gold);"></span>
+                    <button id="btn-logout" class="btn-login" style="cursor: pointer;">登出</button>
+                </div>
             </nav>
         </div>
     </header>
+
+    <main class="main-container" style="max-width: 400px; margin: 100px auto;">
+        <div class="card border-gold">
+            <h2>登入 / 註冊</h2>
+            <div id="auth-form" class="attendance-form">
+                <div class="form-group flex-grow">
+                    <label for="roblox-id">Roblox ID</label>
+                    <input type="text" id="roblox-id" class="custom-input" placeholder="RobloxUsername" required>
+                </div>
+                <div class="form-group flex-grow">
+                    <label for="auth-password">密碼</label>
+                    <input type="password" id="auth-password" class="custom-input" placeholder="至少6位英數組合" required>
+                </div>
+                
+                <p class="card-subtitle" style="color: var(--text-muted); font-size: 11px;">註冊提示：輸入Roblox ID和密碼後點擊「註冊」，您的帳號將送交後台給管理員進行人工審核。審核通過後，您才可正式登入本網站。</p>
+
+                <button id="btn-login-submit" class="btn-gold btn-submit">登入</button>
+                <button id="btn-register-submit" class="btn-outline-gold btn-submit" style="background-color: transparent;">註冊 (待審核)</button>
+            </div>
+        </div>
+    </main>
 
         <footer class="site-footer">
         <div class="footer-container">
@@ -97,5 +124,12 @@
       });
     </script>
 
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+
+    <script src="../js/firebase-config.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/auth-logic.js"></script>
 </body>
 </html>
